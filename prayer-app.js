@@ -677,7 +677,9 @@ function startLearning() {
 }
 
 function showVideoGuide() {
-    alert('ویدیوهای آموزشی به زودی اضافه خواهند شد');
+    // This function is no longer needed as the button is now a direct link
+    // Keeping it for backward compatibility
+    window.open('https://www.youtube.com/results?search_query=آموزش+نماز', '_blank');
 }
 
 function showTab(tabName) {

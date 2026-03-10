@@ -509,6 +509,16 @@ body {
     }
 }
 
+/* Welcome Icon - No Animation */
+.welcome-icon svg {
+    filter: drop-shadow(0 4px 15px rgba(16, 185, 129, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.welcome-icon:hover svg {
+    transform: scale(1.05);
+}
+
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
     .glass-effect {
