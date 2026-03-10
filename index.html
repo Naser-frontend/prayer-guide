@@ -185,28 +185,85 @@
     </div>
 
     <!-- Progress Bar -->
-    <div class="bg-white shadow-lg border-t">
-        <div class="max-w-6xl mx-auto px-4 py-4">
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-bold text-gray-700">پیشرفت شما</span>
-                <span class="text-sm font-bold text-green-600" id="progressText">0%</span>
+    <div class="progress-container">
+        <div class="max-w-6xl mx-auto px-4 py-5">
+            <div class="flex items-center justify-between mb-3">
+                <div class="progress-label">
+                    <i class="fas fa-chart-line"></i>
+                    <span>پیشرفت شما</span>
+                </div>
+                <div class="progress-percentage" id="progressText">0%</div>
             </div>
-            <div class="w-full bg-gray-200 rounded-full h-3">
-                <div id="progressBar" class="progress-bar bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full" style="width: 0%"></div>
+            <div class="progress-wrapper">
+                <div class="progress-bg w-full rounded-full h-4 relative">
+                    <div class="progress-milestones">
+                        <div class="progress-milestone"></div>
+                        <div class="progress-milestone"></div>
+                        <div class="progress-milestone"></div>
+                        <div class="progress-milestone"></div>
+                    </div>
+                    <div id="progressBar" class="progress-bar h-4 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="gradient-bg text-white py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <div class="mb-4">
-                <i class="fas fa-mosque text-4xl mb-3"></i>
-                <h3 class="text-xl font-bold mb-2">آموزش نماز</h3>
-                <p class="text-green-100">یادگیری آسان و گام به گام نماز</p>
+    <footer class="gradient-bg text-white py-12 mt-16">
+        <div class="footer-wave"></div>
+        <div class="max-w-6xl mx-auto px-4 footer-content">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Brand Section -->
+                <div class="text-center md:text-right">
+                    <div class="footer-icon text-5xl mb-3">
+                        <i class="fas fa-mosque"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">آموزش نماز</h3>
+                    <p class="text-green-100 text-sm">یادگیری آسان و گام به گام نماز</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="text-center">
+                    <h4 class="text-lg font-bold mb-4">دسترسی سریع</h4>
+                    <ul class="space-y-2 text-green-100">
+                        <li><a href="#" onclick="showTab('steps')" class="hover:text-white transition-colors">مراحل نماز</a></li>
+                        <li><a href="#" onclick="showTab('practice')" class="hover:text-white transition-colors">تمرین</a></li>
+                        <li><a href="#" onclick="showTab('guide')" class="hover:text-white transition-colors">راهنما</a></li>
+                        <li><a href="#" onclick="showTab('quiz')" class="hover:text-white transition-colors">آزمون</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="text-center md:text-left">
+                    <h4 class="text-lg font-bold mb-4">ارتباط با ما</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="تلگرام">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="اینستاگرام">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="واتساپ">
+                            <i class="fab fa-whatsapp text-xl"></i>
+                        </a>
+                    </div>
+                    <p class="text-green-100 text-sm mt-4">
+                        <i class="fas fa-envelope ml-2"></i>
+                        info@prayer-app.com
+                    </p>
+                </div>
             </div>
-            <div class="text-sm text-green-100">
-                <p>© 2024 تمامی حقوق محفوظ است</p>
+            
+            <!-- Divider -->
+            <div class="border-t border-green-400/30 pt-6">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-sm text-green-100">
+                        © 2024 تمامی حقوق محفوظ است
+                    </p>
+                    <p class="text-sm text-green-100">
+                        ساخته شده با <i class="fas fa-heart text-red-400 mx-1"></i> برای مسلمانان
+                    </p>
+                </div>
             </div>
         </div>
     </footer>
