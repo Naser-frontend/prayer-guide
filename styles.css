@@ -25,9 +25,51 @@
 }
 
 body {
-    background-color: var(--bg-primary);
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 25%, #f9fafb 50%, #f0f9ff 75%, #fef3c7 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     color: var(--text-primary);
     transition: all 0.3s ease;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(251, 191, 36, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body > * {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+[data-theme="dark"] body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #111827 50%, #1f2937 75%, #374151 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+[data-theme="dark"] body::before {
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
 }
 
 .gradient-bg {
@@ -769,24 +811,82 @@ footer .social-links {
     gap: 1rem;
     justify-content: center;
     margin-top: 1rem;
+    flex-wrap: wrap;
 }
 
 footer .social-link {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+footer .social-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+footer .social-link:hover::before {
+    opacity: 1;
 }
 
 footer .social-link:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+footer .social-link:hover i {
+    transform: scale(1.2) rotate(5deg);
+}
+
+footer .social-link i {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+}
+
+/* Individual icon colors on hover */
+footer .social-link:nth-child(1):hover {
+    background: linear-gradient(135deg, #333, #24292e);
+    border-color: #24292e;
+}
+
+footer .social-link:nth-child(2):hover {
+    background: linear-gradient(135deg, #0077b5, #005582);
+    border-color: #0077b5;
+}
+
+footer .social-link:nth-child(3):hover {
+    background: linear-gradient(135deg, #0088cc, #006699);
+    border-color: #0088cc;
+}
+
+footer .social-link:nth-child(4):hover {
+    background: linear-gradient(135deg, #e4405f, #c13584);
+    border-color: #e4405f;
+}
+
+footer .social-link:nth-child(5):hover {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    border-color: #25d366;
+}
+
+footer .social-link:active {
+    transform: translateY(-2px) scale(1.05);
 }
 /* Fix image display issues */
 .step-image {
