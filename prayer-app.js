@@ -702,10 +702,133 @@ function closeModal() {
     prayerApp?.closeModal();
 }
 
+// Animated Background
+class AnimatedBackground {
+    constructor() {
+        this.canvas = document.getElementById('animatedBg');
+        if (!this.canvas) return;
+        
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.shapes = [];
+        this.resize();
+        this.init();
+        
+        window.addEventListener('resize', () => this.resize());
+        this.animate();
+    }
+    
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+    
+    init() {
+        // Create floating particles
+        for (let i = 0; i < 30; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                size: Math.random() * 4 + 2,
+                speedY: Math.random() * 0.5 + 0.2,
+                speedX: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.5 + 0.2,
+                color: this.getRandomColor()
+            });
+        }
+        
+        // Create geometric shapes
+        for (let i = 0; i < 8; i++) {
+            this.shapes.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                size: Math.random() * 60 + 40,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.01,
+                opacity: Math.random() * 0.08 + 0.03,
+                type: Math.floor(Math.random() * 3), // 0: circle, 1: square, 2: triangle
+                color: this.getRandomColor()
+            });
+        }
+    }
+    
+    getRandomColor() {
+        const colors = [
+            'rgba(16, 185, 129, ',  // green
+            'rgba(59, 130, 246, ',  // blue
+            'rgba(251, 191, 36, '   // gold
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+    
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Draw and update particles
+        this.particles.forEach(particle => {
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            this.ctx.fillStyle = particle.color + particle.opacity + ')';
+            this.ctx.fill();
+            
+            // Update position
+            particle.y -= particle.speedY;
+            particle.x += particle.speedX;
+            
+            // Reset if out of bounds
+            if (particle.y < -10) {
+                particle.y = this.canvas.height + 10;
+                particle.x = Math.random() * this.canvas.width;
+            }
+            if (particle.x < -10 || particle.x > this.canvas.width + 10) {
+                particle.x = Math.random() * this.canvas.width;
+            }
+        });
+        
+        // Draw and update shapes
+        this.shapes.forEach(shape => {
+            this.ctx.save();
+            this.ctx.translate(shape.x, shape.y);
+            this.ctx.rotate(shape.rotation);
+            this.ctx.globalAlpha = shape.opacity;
+            
+            this.ctx.strokeStyle = shape.color + '0.5)';
+            this.ctx.lineWidth = 2;
+            
+            if (shape.type === 0) {
+                // Circle
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, shape.size / 2, 0, Math.PI * 2);
+                this.ctx.stroke();
+            } else if (shape.type === 1) {
+                // Square
+                this.ctx.strokeRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size);
+            } else {
+                // Triangle
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, -shape.size / 2);
+                this.ctx.lineTo(shape.size / 2, shape.size / 2);
+                this.ctx.lineTo(-shape.size / 2, shape.size / 2);
+                this.ctx.closePath();
+                this.ctx.stroke();
+            }
+            
+            this.ctx.restore();
+            
+            // Update rotation
+            shape.rotation += shape.rotationSpeed;
+        });
+        
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
 // Initialize app
 let prayerApp;
+let animatedBg;
 document.addEventListener('DOMContentLoaded', () => {
     prayerApp = new PrayerApp();
+    animatedBg = new AnimatedBackground();
     window.prayerApp = prayerApp;
     window.startLearning = startLearning;
     window.showVideoGuide = showVideoGuide;

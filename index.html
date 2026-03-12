@@ -17,6 +17,9 @@
 </head>
 <body class="bg-gray-50 scroll-smooth transition-colors duration-300">
     
+    <!-- Animated Background Canvas -->
+    <canvas id="animatedBg"></canvas>
+    
     <!-- Header -->
     <header class="hero-pattern text-white py-8 shadow-lg relative overflow-hidden" role="banner">
         <div class="absolute inset-0 bg-gradient-to-br from-green-600/20 to-emerald-700/20"></div>
@@ -47,99 +50,132 @@
             <div class="glass-effect rounded-2xl p-6 md:p-8 shadow-xl max-w-4xl mx-auto border border-green-100">
                 <div class="text-center">
                     <div class="welcome-icon mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="120" height="120" class="mx-auto modern-mosque-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="150" height="150" class="mx-auto modern-mosque-icon">
                             <defs>
-                                <linearGradient id="modernMosqueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
-                                    <stop offset="50%" style="stop-color:#059669;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#047857;stop-opacity:1" />
+                                <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#10b981"/>
+                                    <stop offset="100%" style="stop-color:#059669"/>
                                 </linearGradient>
-                                <linearGradient id="modernDomeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#34d399;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+                                <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#34d399"/>
+                                    <stop offset="100%" style="stop-color:#10b981"/>
                                 </linearGradient>
-                                <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+                                <linearGradient id="goldAccent" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#fcd34d"/>
+                                    <stop offset="100%" style="stop-color:#fbbf24"/>
                                 </linearGradient>
-                                <filter id="shadow">
-                                    <feDropShadow dx="0" dy="4" stdDeviation="3" flood-opacity="0.3"/>
+                                <filter id="softShadow">
+                                    <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+                                    <feOffset dx="0" dy="4" result="offsetblur"/>
+                                    <feComponentTransfer>
+                                        <feFuncA type="linear" slope="0.3"/>
+                                    </feComponentTransfer>
+                                    <feMerge>
+                                        <feMergeNode/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
                                 </filter>
-                                <radialGradient id="glowGradient">
-                                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.4" />
-                                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:0" />
+                                <radialGradient id="bgCircle">
+                                    <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.15"/>
+                                    <stop offset="100%" style="stop-color:#10b981;stop-opacity:0"/>
                                 </radialGradient>
                             </defs>
                             
-                            <!-- Glow effect -->
-                            <circle cx="70" cy="70" r="60" fill="url(#glowGradient)" opacity="0.6"/>
+                            <!-- Background circle -->
+                            <circle cx="120" cy="120" r="100" fill="url(#bgCircle)"/>
                             
-                            <!-- Base platform with shadow -->
-                            <rect x="20" y="105" width="100" height="6" fill="url(#modernMosqueGradient)" rx="3" filter="url(#shadow)"/>
-                            <rect x="22" y="108" width="96" height="2" fill="#ffffff" opacity="0.2" rx="1"/>
+                            <!-- Main platform -->
+                            <rect x="40" y="180" width="160" height="10" rx="5" fill="url(#primaryGrad)" filter="url(#softShadow)"/>
+                            <rect x="42" y="182" width="156" height="4" rx="2" fill="#ffffff" opacity="0.2"/>
                             
-                            <!-- Left minaret - modern style -->
-                            <g filter="url(#shadow)">
-                                <rect x="28" y="50" width="12" height="55" fill="url(#modernMosqueGradient)" rx="2"/>
-                                <rect x="30" y="52" width="8" height="50" fill="#ffffff" opacity="0.1" rx="1"/>
-                                <rect x="26" y="46" width="16" height="5" fill="url(#modernMosqueGradient)" rx="1"/>
-                                <ellipse cx="34" cy="40" rx="8" ry="9" fill="url(#modernDomeGradient)"/>
-                                <ellipse cx="34" cy="41" rx="6" ry="7" fill="#ffffff" opacity="0.15"/>
-                                <path d="M 34 30 L 32 35 Q 32 38 34 40 Q 36 38 36 35 L 34 30 Z" fill="url(#accentGradient)"/>
-                                <circle cx="34" cy="28" r="2" fill="url(#accentGradient)"/>
-                                <circle cx="34" cy="28" r="1" fill="#ffffff" opacity="0.5"/>
-                            </g>
-                            
-                            <!-- Right minaret - modern style -->
-                            <g filter="url(#shadow)">
-                                <rect x="100" y="50" width="12" height="55" fill="url(#modernMosqueGradient)" rx="2"/>
-                                <rect x="102" y="52" width="8" height="50" fill="#ffffff" opacity="0.1" rx="1"/>
-                                <rect x="98" y="46" width="16" height="5" fill="url(#modernMosqueGradient)" rx="1"/>
-                                <ellipse cx="106" cy="40" rx="8" ry="9" fill="url(#modernDomeGradient)"/>
-                                <ellipse cx="106" cy="41" rx="6" ry="7" fill="#ffffff" opacity="0.15"/>
-                                <path d="M 106 30 L 104 35 Q 104 38 106 40 Q 108 38 108 35 L 106 30 Z" fill="url(#accentGradient)"/>
-                                <circle cx="106" cy="28" r="2" fill="url(#accentGradient)"/>
-                                <circle cx="106" cy="28" r="1" fill="#ffffff" opacity="0.5"/>
-                            </g>
-                            
-                            <!-- Main building - modern geometric -->
-                            <g filter="url(#shadow)">
-                                <rect x="45" y="65" width="50" height="40" fill="url(#modernMosqueGradient)" rx="3"/>
-                                <rect x="47" y="67" width="46" height="36" fill="#ffffff" opacity="0.08" rx="2"/>
+                            <!-- Central dome structure -->
+                            <g filter="url(#softShadow)">
+                                <!-- Main building base -->
+                                <rect x="80" y="120" width="80" height="60" rx="6" fill="url(#primaryGrad)"/>
+                                <rect x="82" y="122" width="76" height="56" rx="5" fill="#ffffff" opacity="0.08"/>
                                 
-                                <!-- Modern windows -->
-                                <rect x="52" y="73" width="10" height="16" fill="#ffffff" opacity="0.25" rx="5"/>
-                                <rect x="65" y="73" width="10" height="16" fill="#ffffff" opacity="0.25" rx="5"/>
-                                <rect x="78" y="73" width="10" height="16" fill="#ffffff" opacity="0.25" rx="5"/>
+                                <!-- Large arched entrance -->
+                                <path d="M 100 140 Q 100 130 120 130 Q 140 130 140 140 L 140 180 L 100 180 Z" 
+                                      fill="#ffffff" opacity="0.25"/>
+                                <rect x="102" y="145" width="36" height="35" rx="3" fill="url(#primaryGrad)" opacity="0.4"/>
                                 
-                                <!-- Decorative lines -->
-                                <line x1="45" y1="75" x2="95" y2="75" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
-                                <line x1="45" y1="95" x2="95" y2="95" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
-                            </g>
-                            
-                            <!-- Main dome - modern style -->
-                            <g filter="url(#shadow)">
-                                <ellipse cx="70" cy="55" rx="26" ry="18" fill="url(#modernDomeGradient)"/>
-                                <ellipse cx="70" cy="56" rx="22" ry="15" fill="#ffffff" opacity="0.12"/>
-                                <ellipse cx="70" cy="54" rx="20" ry="13" fill="url(#modernDomeGradient)" opacity="0.5"/>
+                                <!-- Side arches -->
+                                <path d="M 85 145 Q 85 140 90 140 Q 95 140 95 145 L 95 165 L 85 165 Z" 
+                                      fill="#ffffff" opacity="0.2"/>
+                                <path d="M 145 145 Q 145 140 150 140 Q 155 140 155 145 L 155 165 L 145 165 Z" 
+                                      fill="#ffffff" opacity="0.2"/>
                                 
-                                <!-- Crescent on main dome -->
-                                <path d="M 70 37 L 67 43 Q 67 47 70 50 Q 73 47 73 43 L 70 37 Z" fill="url(#accentGradient)"/>
-                                <circle cx="70" cy="34" r="2.5" fill="url(#accentGradient)"/>
-                                <circle cx="70" cy="34" r="1.5" fill="#ffffff" opacity="0.6"/>
+                                <!-- Decorative bands -->
+                                <rect x="80" y="135" width="80" height="3" rx="1.5" fill="url(#goldAccent)" opacity="0.7"/>
+                                <rect x="80" y="155" width="80" height="2" rx="1" fill="url(#goldAccent)" opacity="0.5"/>
                             </g>
                             
-                            <!-- Modern door -->
-                            <g filter="url(#shadow)">
-                                <path d="M 60 90 Q 60 82 70 82 Q 80 82 80 90 L 80 105 L 60 105 Z" fill="#ffffff" opacity="0.3"/>
-                                <rect x="62" y="92" width="16" height="13" fill="url(#modernMosqueGradient)" opacity="0.4" rx="2"/>
-                                <circle cx="75" cy="98" r="1.5" fill="url(#accentGradient)"/>
+                            <!-- Main central dome -->
+                            <g filter="url(#softShadow)">
+                                <ellipse cx="120" cy="100" rx="45" ry="32" fill="url(#accentGrad)"/>
+                                <ellipse cx="120" cy="101" rx="40" ry="28" fill="#ffffff" opacity="0.12"/>
+                                <ellipse cx="120" cy="99" rx="38" ry="26" fill="url(#accentGrad)" opacity="0.5"/>
+                                
+                                <!-- Dome top ornament -->
+                                <circle cx="120" cy="68" r="5" fill="url(#goldAccent)"/>
+                                <rect x="118" y="68" width="4" height="12" rx="2" fill="url(#goldAccent)"/>
+                                
+                                <!-- Crescent moon -->
+                                <path d="M 120 58 L 116 66 Q 116 70 120 74 Q 124 70 124 66 L 120 58 Z" 
+                                      fill="url(#goldAccent)"/>
+                                <circle cx="120" cy="54" r="4" fill="url(#goldAccent)"/>
+                                <circle cx="120" cy="54" r="2.5" fill="#ffffff" opacity="0.8"/>
                             </g>
                             
-                            <!-- Decorative geometric patterns -->
-                            <circle cx="50" cy="98" r="2.5" fill="url(#accentGradient)" opacity="0.6"/>
-                            <circle cx="90" cy="98" r="2.5" fill="url(#accentGradient)" opacity="0.6"/>
-                            <polygon points="70,60 72,63 70,66 68,63" fill="#ffffff" opacity="0.3"/>
+                            <!-- Left minaret -->
+                            <g filter="url(#softShadow)">
+                                <rect x="55" y="90" width="18" height="90" rx="4" fill="url(#primaryGrad)"/>
+                                <rect x="57" y="92" width="14" height="86" rx="3" fill="#ffffff" opacity="0.08"/>
+                                
+                                <!-- Minaret balcony -->
+                                <rect x="52" y="105" width="24" height="6" rx="2" fill="url(#primaryGrad)"/>
+                                <rect x="53" y="106" width="22" height="3" rx="1" fill="url(#goldAccent)" opacity="0.6"/>
+                                
+                                <!-- Minaret dome -->
+                                <ellipse cx="64" cy="82" rx="12" ry="14" fill="url(#accentGrad)"/>
+                                <ellipse cx="64" cy="83" rx="9" ry="11" fill="#ffffff" opacity="0.12"/>
+                                
+                                <!-- Minaret crescent -->
+                                <path d="M 64 68 L 62 73 Q 62 76 64 78 Q 66 76 66 73 L 64 68 Z" 
+                                      fill="url(#goldAccent)"/>
+                                <circle cx="64" cy="65" r="3" fill="url(#goldAccent)"/>
+                                <circle cx="64" cy="65" r="1.5" fill="#ffffff" opacity="0.8"/>
+                            </g>
+                            
+                            <!-- Right minaret -->
+                            <g filter="url(#softShadow)">
+                                <rect x="167" y="90" width="18" height="90" rx="4" fill="url(#primaryGrad)"/>
+                                <rect x="169" y="92" width="14" height="86" rx="3" fill="#ffffff" opacity="0.08"/>
+                                
+                                <!-- Minaret balcony -->
+                                <rect x="164" y="105" width="24" height="6" rx="2" fill="url(#primaryGrad)"/>
+                                <rect x="165" y="106" width="22" height="3" rx="1" fill="url(#goldAccent)" opacity="0.6"/>
+                                
+                                <!-- Minaret dome -->
+                                <ellipse cx="176" cy="82" rx="12" ry="14" fill="url(#accentGrad)"/>
+                                <ellipse cx="176" cy="83" rx="9" ry="11" fill="#ffffff" opacity="0.12"/>
+                                
+                                <!-- Minaret crescent -->
+                                <path d="M 176 68 L 174 73 Q 174 76 176 78 Q 178 76 178 73 L 176 68 Z" 
+                                      fill="url(#goldAccent)"/>
+                                <circle cx="176" cy="65" r="3" fill="url(#goldAccent)"/>
+                                <circle cx="176" cy="65" r="1.5" fill="#ffffff" opacity="0.8"/>
+                            </g>
+                            
+                            <!-- Decorative elements -->
+                            <circle cx="70" cy="170" r="3" fill="url(#goldAccent)" opacity="0.6"/>
+                            <circle cx="170" cy="170" r="3" fill="url(#goldAccent)" opacity="0.6"/>
+                            
+                            <!-- Star pattern on dome -->
+                            <g opacity="0.5">
+                                <path d="M 120 105 L 121 108 L 124 108 L 122 110 L 123 113 L 120 111 L 117 113 L 118 110 L 116 108 L 119 108 Z" 
+                                      fill="#ffffff"/>
+                            </g>
                         </svg>
                     </div>
                     <h2 id="welcome-title" class="text-2xl md:text-3xl font-bold text-gray-800 mb-3 bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">
